@@ -6,7 +6,7 @@ def input_int(a, b):
         else:
             break
     return x
-#####
+####
 qwe = int(input(" "))
 rty = int(input(" "))          
 x = input_int(qwe, rty)
