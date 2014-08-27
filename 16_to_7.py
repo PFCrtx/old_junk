@@ -5,8 +5,7 @@ def hextodec(x):
         if not str(x).isdigit():
             sign = " "
             x = list(x)
-            if any(sign !="A" and sign !="B" and sign !="C" and sign !="D" and sign !="E" and sign !="F" and sign != "1" and sign !="2" and sign !="3" and sign !="4" and sign !="5" and sign !="6"
-            and sign !="7" and sign !="8" and sign !="9" and sign != "0" for sign in x): # Не придумал пока ничего лучшего...
+            if any((sign < "A" or sign > "F") and (sign < "0" or sign > "9") for sign in x):
                 print("Недопустимое значение!")
                 x = input("... ")
                 continue
@@ -22,19 +21,9 @@ def hextodec(x):
     while i <= maxExp:
         a = x[i]
         if not a.isdigit():
-            a = ord(a) # И здесь тоже.
-            if a == 65:
-                a = 10
-            elif a == 66:
-                a = 11
-            elif a == 67:
-                a = 12
-            elif a == 68:
-                a = 13
-            elif a == 69:
-                a = 14
-            elif a == 70:
-                a = 15
+            a = ord(a)
+            if a >= 65 and a <= 70:
+                a = 65 - (55 + (65-a))
         else:
             a = x[i]
         inter = int(a) * (16**(maxExp -i))
