@@ -39,7 +39,7 @@ while r_str != my_str:
          r_str = new_str
          k+=1
          generations.append(str(k) + ": " + r_str)   
-done = (str(generations).replace("'", "").replace("[","").replace("]",""))
+done = (str(generations).replace("'", "").replace("[","").replace("]","").replace(",", "\n"))
 f = open("evol.txt", "w")
 f.write(done)
 f.close()

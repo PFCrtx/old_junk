@@ -16,7 +16,7 @@ while len(book) < 100000:
     i+=1     
     book.append("".join(name).capitalize())
     name = [] # Обнуляем "имя".
-book = str(book).replace("'", "").replace("[","").replace("]","")
+book = str(book).replace("'", "").replace("[","").replace("]","").replace(",","\n")
 f = open("book.txt", "w")
 f.write(book)
 f.close()
