@@ -1,13 +1,14 @@
 def final_test(a, b):
     test = True
+    d = 0
     a = list(a)
     b = list(b)
-    q = 0
-    while q < len(a):
-        if a[q] not in b:
+    while d < len(a):
+        r = a.count(a[d])
+        if b.count(a[d]) != r:
             test = False
             break
-        q+=1
+        d+=1
     return test
 #
 def normal_ana(my_word):
