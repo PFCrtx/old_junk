@@ -14,13 +14,33 @@ class Player():
 
     def show_health(self):
         return self.health
-
+        
     def change_block(self, new_block):
         if new_block in Player.defense:
             self.block = new_block
             print("OK")
         else:
             pass
+
+    def super_hit(self, target):
+        if self.health > 1:
+            self.health -= 1
+            risk = randint(1, 6)
+            test = randint(1, 6)
+            if risk == test:
+                x = randint(2, 4)
+                target.health -= x
+                print("Вы успешно применили особый приём!")
+                if target.health <= 0:
+                    print(target.name + " нокаутирован! Бой завершен.")
+                else:
+                    target.change_block()
+            else:
+                target.change_block()
+                print("Особый приём не удался.")
+        else:
+            pass
+        
 
     def hit(self, target, aim):
 
@@ -83,7 +103,14 @@ class Enemy(Player):
 
     def change_block(self):
         self.block = Player.defense[randint(0, 3)]
-        Player.ring[1].hit()
+        while True:
+            n = randint(1, 10)
+            if n > 3:
+                Player.ring[1].hit()
+                break
+            if n <= 3 and self.health > 1:
+                Player.ring[1].super_hit()
+                break
 
     def hit(self, target = "", aim = ""):
         target = Player.ring[0]
@@ -134,9 +161,23 @@ class Enemy(Player):
             else:
                 pass
 
+    def super_hit(self, target = ""):
+        target = Player.ring[0]
+        self.health -= 1
+        risk = randint(1, 6)
+        test = randint(1, 6)
+        if risk == test:
+            x = randint(2, 4)
+            target.health -= x
+            print("Против вас использован особый приём!")
+            if target.health <= 0:
+                print(target.name + " нокаутирован! Бой завершен.")
+        else:
+            print("Вам удалось отразить особую атаку.")
+
 #
-name = input("\Введите ваше имя: ")
-ename = input("\Введите имя противника: ")
+name = input("Введите ваше имя: ")
+ename = input("Введите имя противника: ")
 if name == "":
     name = "Tyler"
 if ename == "":
@@ -148,7 +189,8 @@ you = Enemy(ename)
 Player.ring.append(you)
 k = 1
 print("Чтобы выбрать зону атаки, введите число от 1 до 5. ")
-print("Чтобы изменить зону защиты, введите 'A', 'B', 'C' или 'D': ")
+print("Чтобы изменить зону защиты, введите 'A', 'B', 'C' или 'D'. ")
+print("Чтобы использовать особый приём, введите 'X'. ")
 while True:
     p = me.show_health()
     q = you.show_health()
@@ -160,7 +202,7 @@ while True:
         break
     
     print("Раунд " + str(k))
-    x = input("CO! " )
+    x = input("GO! " )
     if not x.isdigit():
         if x == "A":
             me.change_block("A")
@@ -170,6 +212,9 @@ while True:
             me.change_block("C")
         elif x == "D":
             me.change_block("D")
+        elif x == "X":
+            me.super_hit(you)
+            k+=1
     if x.isdigit():
         x = int(x)
         if x == 1:
@@ -187,6 +232,7 @@ while True:
         elif x == 5:
             me.hit(you, 5)
             k+=1
+input()
         
             
         
