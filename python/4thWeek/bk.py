@@ -105,10 +105,10 @@ class Enemy(Player):
         self.block = Player.defense[randint(0, 3)]
         while True:
             n = randint(1, 10)
-            if n > 3:
+            if n > 2:
                 Player.ring[1].hit()
                 break
-            if n <= 3 and self.health > 1:
+            if n <= 2 and self.health > 1:
                 Player.ring[1].super_hit()
                 break
 
@@ -176,21 +176,25 @@ class Enemy(Player):
             print("Вам удалось отразить особую атаку.")
 
 #
+def battle(name, ename):
+    global me
+    global you
+    if name == "":
+        name = "Tyler"
+    if ename == "":
+        ename = "Cornelius"
+    me = Player(name)
+    Player.ring.append(me)
+    you = Enemy(ename)
+    Player.ring.append(you)
+#
 name = input("Введите ваше имя: ")
 ename = input("Введите имя противника: ")
-if name == "":
-    name = "Tyler"
-if ename == "":
-    ename = "Cornelius"
-    
-me = Player(name)
-Player.ring.append(me)
-you = Enemy(ename)
-Player.ring.append(you)
-k = 1
 print("Чтобы выбрать зону атаки, введите число от 1 до 5. ")
 print("Чтобы изменить зону защиты, введите 'A', 'B', 'C' или 'D'. ")
 print("Чтобы использовать особый приём, введите 'X'. ")
+battle(name, ename)
+k = 1
 while True:
     p = me.show_health()
     q = you.show_health()
