@@ -101,6 +101,11 @@ class Player():
 
 class Enemy(Player):
 
+    def __init__(self, name):
+        self.name = name
+        self.block = Player.defense[randint(0, 3)]
+        self.health = 6
+
     def change_block(self):
         self.block = Player.defense[randint(0, 3)]
         while True:
@@ -174,7 +179,6 @@ class Enemy(Player):
                 print(target.name + " нокаутирован! Бой завершен.")
         else:
             print("Вам удалось отразить особую атаку.")
-
 #
 def battle(name, ename):
     global me
@@ -188,55 +192,59 @@ def battle(name, ename):
     you = Enemy(ename)
     Player.ring.append(you)
 #
-name = input("Введите ваше имя: ")
-ename = input("Введите имя противника: ")
 print("Чтобы выбрать зону атаки, введите число от 1 до 5. ")
 print("Чтобы изменить зону защиты, введите 'A', 'B', 'C' или 'D'. ")
 print("Чтобы использовать особый приём, введите 'X'. ")
-battle(name, ename)
-k = 1
 while True:
-    p = me.show_health()
-    q = you.show_health()
-    if p <= 0:
-        print("Вы проиграли.")
+    qu = input("Чтобы покинуть программу, введите 'Q': ")
+    if qu == "Q":
         break
-    if  q <= 0:
-        print("Вы победили!")
-        break
-    
-    print("Раунд " + str(k))
-    x = input("GO! " )
-    if not x.isdigit():
-        if x == "A":
-            me.change_block("A")
-        elif x == "B":
-            me.change_block("B")
-        elif x == "C":
-            me.change_block("C")
-        elif x == "D":
-            me.change_block("D")
-        elif x == "X":
-            me.super_hit(you)
-            k+=1
-    if x.isdigit():
-        x = int(x)
-        if x == 1:
-            me.hit(you, 1)
-            k+=1
-        elif x == 2:
-            me.hit(you, 2)
-            k+=1
-        elif x == 3:
-            me.hit(you, 3)
-            k+=1
-        elif x == 4:
-            me.hit(you, 4)
-            k+=1
-        elif x == 5:
-            me.hit(you, 5)
-            k+=1
-input()
+    name = input("Введите ваше имя: ")
+    ename = input("Введите имя противника: ")
+    Player.ring.clear()
+    battle(name, ename)
+    k = 1
+    while True:
+        p = me.show_health()
+        q = you.show_health()
+        if p <= 0:
+            print("Вы проиграли.")
+            break
+        if  q <= 0:
+            print("Вы победили!")
+            break
+        
+        print("Раунд " + str(k))
+        x = input("GO! " )
+        if not x.isdigit():
+            if x == "A":
+                me.change_block("A")
+            elif x == "B":
+                me.change_block("B")
+            elif x == "C":
+                me.change_block("C")
+            elif x == "D":
+                me.change_block("D")
+            elif x == "X":
+                me.super_hit(you)
+                k+=1
+        if x.isdigit():
+            x = int(x)
+            if x == 1:
+                me.hit(you, 1)
+                k+=1
+            elif x == 2:
+                me.hit(you, 2)
+                k+=1
+            elif x == 3:
+                me.hit(you, 3)
+                k+=1
+            elif x == 4:
+                me.hit(you, 4)
+                k+=1
+            elif x == 5:
+                me.hit(you, 5)
+                k+=1
         
             
         
