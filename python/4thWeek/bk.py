@@ -217,6 +217,7 @@ while True:
         print("Раунд " + str(k))
         x = input("GO! " )
         if not x.isdigit():
+            x = x.upper()
             if x == "A":
                 me.change_block("A")
             elif x == "B":
