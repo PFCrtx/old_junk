@@ -195,11 +195,11 @@ for i in range(101):
 Cell.create_field()
 my_list = []
 while True:
-    print("Нажмиет Enter, если все необходимые координаты введены")
-    my_cell = input("Вводите координаты живых клеток по одной: ")
+    my_cell = input("Вводите номера полей с живыми клетками (от 1 до 99) по одному: ")
     if my_cell == "":
         break
     my_list.append(my_cell)
+    print("Нажмиет Enter, если все необходимые координаты введены.")
 Cell.set_start_position(my_list)
 x = int(input("Введите кол-во поколений: "))
 print(" ")
