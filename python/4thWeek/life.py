@@ -9,18 +9,22 @@ class Cell():
         self.status = "dead"
 
     def change_status(self):
+        """ Меняет состояние клетки на противоположное"""
         if self.status == "alive":
             self.status = "dead"
         elif self.status == "dead":
             self.status = "alive"
 
     def show_status(self):
+        """ Возвращает текущее остояние клетки """
         return self.status
 
     def show_number(self):
+        """ Возвращает порядковый номер клетки"""
         return self.number
 
     def check_neighbors(self):
+        """ Проверет 8 соседних клеток; определяет на основании проверки статус клетки в следующем поколении."""
         dead_neighbor = 0
         alive_neighbor = 0
         my_number = self.number
@@ -108,6 +112,7 @@ class Cell():
             return "stay"
 
     def generation():
+        """ Проверяет статус будущего поколения для всех клеток в текущем массиве."""
         q = 0
         n = []
         while q <= 9:
@@ -131,6 +136,7 @@ class Cell():
     generation = staticmethod(generation)
 
     def create_field():
+        """ Создаёт массив из 100 "мёртвых" клеток"""
         i = 0
         arr = []
         while i < 100:
@@ -144,6 +150,7 @@ class Cell():
     create_field = staticmethod(create_field)
 
     def set_start_position(my_list):
+        """Позволяет пользователю задать стартовое состояние поля, меняя состояние отдльных клеток."""
         x = Cell.population
         i = 0
         while i <= len(my_list)-1:
@@ -159,6 +166,7 @@ class Cell():
     set_start_position = staticmethod(set_start_position)
 #
 def life(step):
+    """step раз сменяет поколения клеток; иллюстрирует этот процесс в псевдографике"""
     j = 0
     i = 0
     s = ""
