@@ -1,4 +1,3 @@
-#
 from random import randint
 class Area():
     var = ["empty", "set", "dead", "checked"]
@@ -45,20 +44,27 @@ class Area():
     create_grid = staticmethod(create_grid)
 #
 class Player():
-    def __init__(self):
-        pass
+    my_grid = []
 
     def fire(self, target):
         self.target = target
-        x = Area.grid[target].show_status()
+        x = Enemy.enemy_grid[target].show_status()
         if x == "set":
-            Area.grid[target].kill_self()
+            Enemy.enemy_grid[target].kill_self()
             print("Попадание!" + "\n")
         elif x == "empty":
-            Area.grid[target].mark_self()
+            Enemy.enemy_grid[target].mark_self()
             print("Мимо." + "\n")
-            
-            
+
+class Enemy(Area):
+    def __init__(self):
+        pass
+
+    enemy_grid = []
+
+    def enemy_foo(self):
+        pass
+    
 
     
 class MyFleet():
@@ -197,7 +203,7 @@ class MyFleet():
     get_fleet = staticmethod(get_fleet)
     
 ###########
-def test_show():
+def test_show(my_list):
     i = 0
     s = "1  "
     test = 0
@@ -209,7 +215,7 @@ def test_show():
             print("    a  b  c  d  e  f  g  h  i  k ")
             print(" ")
             test+=1
-        n = Area.grid[i].show_status()
+        n = my_list[i].show_status()
         if n == "empty":
             s += " o "
             i+=1
@@ -256,18 +262,52 @@ def test_show():
                     s = str(j) + "  "
     return " "
 #
-me = Player()
-Area.create_grid()
-Area.create_my_fleet()
+def create_game():
+    global me
+    global you
+    me = Player()
+    Area.create_grid()
+    Area.create_my_fleet()
+    Player.my_grid += Area.grid
+    Area.grid.clear()
+    you = Enemy()
+    Area.create_grid()
+    Area.create_my_fleet()
+    Enemy.enemy_grid += Area.grid
+    Area.grid.clear()
+    
+
+create_game()
+print("Введите 't', чтобы начать игру ")
 while True:
-    x = input("\ ")
+    print()
+    x = input(" Координаты вводятся (пока) в формате чисел от 0 до 99 ")
     if x == "t":
-        print(test_show())
+        print("You")
+        print(" ")
+        print(test_show(Player.my_grid))
+        print(" ")
+        print("Enemy")
+        print(" ")
+        print(test_show(Enemy.enemy_grid))
+        
     elif x.isdigit():
         if len(x) < 2:
             x = "0" + x
         me.fire(int(x))
-        print(test_show())
+        print("You")
+        print(" ")
+        print(test_show(Player.my_grid))
+        print(" ")
+        print("Enemy")
+        print(" ")
+        print(test_show(Enemy.enemy_grid))
+    elif x == "rf":
+        Area.grid.clear()
+        Area.create_grid()
+        Area.create_my_fleet()
+        print(test_show(Player.my_grid))
+        
     elif x == "q":
         break
 #i = 0
